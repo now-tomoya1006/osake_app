@@ -1,0 +1,45 @@
+<div class="container">
+
+<div class="row">
+   <div class="col-md-3">
+    <div class="col-ms-6 ">
+		<h2>My Page</h2>
+		<%= render 'users/profile', user: current_user %>
+
+		<h2>POST</h2>
+		<%= render 'sakes/newform', sake: @sake %>
+	</div>
+	</div>
+
+
+<div class="col-md-9">
+<div class="col-ms-offset-3">
+      <table class="table">
+        <h1>user</h1>
+		<thead>
+			<tr>
+				<th><P>image</P></th>
+				<th><P>name</P></th>
+				<th><P>type</P></th>
+				
+			</tr>
+		</thead>
+		<tbody>
+				<% @users.each do |user| %>
+				<tr>
+					 <td><%= attachment_image_tag(user, :profile_image, :fill, 50, 50, fallback: "none.png") %></td>
+					<td><%= user.name%></td>
+					<td><%= user.type%></td>
+
+					<td><%= link_to "Show", user_path(user), class: "user_#{user.id}" %></td>
+				</tr>
+				<% end %>
+			</tbody>
+			
+		
+		</table>
+	</div>
+	</div>
+ </div>
+</div>
+

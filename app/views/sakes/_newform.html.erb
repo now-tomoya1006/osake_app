@@ -1,0 +1,30 @@
+
+<% if sake && sake.errors.any? %>
+		<%= sake.errors.count %>errors prohibited this sake from being saved:<br>
+		<% sake.errors.full_messages.each do |message| %>
+		<%= message %>
+		<% end %>
+<% end %>
+	
+
+<%= form_for(sake) do |f| %>
+
+ <div class="field row">
+      <%= f.label :image %><br />
+      <%= f.attachment_field :image, class: "image" %>
+    </div>
+
+ <div class="field row">
+    <%= f.label :title %>
+    <%= f.text_field :title, class: 'col-xs-12 sake_title' %>
+  </div>
+
+  <div class="field row">
+    <%= f.label :opinion %>
+    <%= f.text_area :body, class: 'col-xs-12 sake_body'%>
+  </div>
+
+  <div class="actions row">
+    <%= f.submit class: 'btn btn-primary col-xs-12'%>
+  </div>
+<% end %>

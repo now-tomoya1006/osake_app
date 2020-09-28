@@ -1,0 +1,44 @@
+<div class="container">
+
+<div class="row">
+   <div class="col-md-3">
+    <div class="col-ms-6 ">
+		<h2>My Page</h2>
+		<%= render 'users/profile', user: current_user %>
+
+		<h2>POST</h2>
+		<%= render 'sakes/newform', sake: @sake %>
+	</div>
+	</div>
+
+<div class="col-xs-9">
+  <div class="col-ms-offset-3">
+          <table class="table">
+            <h1>リキューる</h1>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Title</th>
+                  <th>Reviews</th>
+                </tr>
+              </thead>
+
+                <% @sakes.each do |sake| %>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <%= attachment_image_tag sake.user, :profile_image, :fill, 50, 50, format:'jpeg', class: "profile-img", fallback:"none.png" %>                     
+                        </td>
+                        <td>
+                          <%=link_to sake.title, sake, class: "sake_#{sake.id}" %>
+                        </td>
+                        <td>
+                          <%= sake.body %>
+                        </td> 
+                        <% end %>
+                      </tr>
+                    </tbody>
+        </table>
+  </div>
+
+</div>

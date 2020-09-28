@@ -1,0 +1,104 @@
+<section class="sct-color-1 ">
+  <div class="masonry-container">
+    <div class="row">
+
+     <div class="col-md-6 col-md-offset-3">
+        <div class="sake-item">
+       
+            <div class="sake-image">
+              <%= attachment_image_tag @sake, :image,:fill, 500, 500, fallback: "noimage.png" %>
+            </div>
+          </div>
+          <div class="sake-content">
+            <h2 class="sake-title"><%= @sake.title %></h2>
+            <ul class="float-wrapper">
+              <li>
+                <i class="user1"></i>
+                By<a><%= link_to @user.name ,user_path(@user.id) %></a>
+              
+                <i class="fa fa-calendar"></i><%= @sake.created_at.strftime('%Y/%m/%d') %>
+              
+   <% if current_user.already_favorited?(@sake) %>
+                
+                  <a href="#">
+                    <%= link_to sake_favorites_path(@sake), method: :delete do %>
+                   
+                       <i class="fas fa-heart" style="color: red;"></i>
+                  <% end %>
+                   <%= @sake.favorites.count %>
+                   </a>
+              <% else %>
+              
+                  <a href="#">
+                    <%= link_to sake_favorites_path(@sake), method: :post do %>
+                     
+                   <i class="fas fa-heart" style="color: red;"></i>
+                  <% end %>
+                   <%= @sake.favorites.count %>
+                  </a>
+               
+              <% end %>
+           
+
+              
+                <i class="comment"></i>
+                <i class="far fa-comment"></i>
+                <a href="#comments"><%= @sake.sake_comments.count %></a>
+              
+              
+                <% if @sake.user == current_user %>
+                  <%= link_to "Edit", edit_sake_path(@sake) %>
+                  <%= link_to "Destroy", sake_path(@sake), method: :delete %>
+                <% end %>
+              
+            </ul>
+          </div>
+          <div class="comment-list">
+            <div class="float-wrapper">
+              <h2 class="c"><%= @sake.sake_comments.count %>件コメント</h2>
+            </div>
+            <ol>
+              <% @sake.sake_comments.each do |sake_comment| %>
+                <li class="comment-count">
+                  <div class="comment-body bb">
+                    <div class="comment-avatar">
+                      <div class="avatar">
+                        <%= attachment_image_tag sake_comment.user, :profile_image, :fill, 50, 50, fallback: "none.png", size: "50x50" %>
+                      </div>
+                    </div>
+                    <div class="comment-text">
+                      <div class="comment-1">
+                        <a href="#" class="link-add"><%= sake_comment.user.name %></a>
+                        <span class="comment-meta">
+                          <span class="comment-date"><%= @sake.created_at.strftime('%Y/%m/%d') %></span>
+                        </span>
+                      </div>
+                      <div class="comment-entry"><%= sake_comment.comment %></div>
+                    </div>
+                      <div>
+                          <% if sake_comment.user == current_user %>
+                          <td><%= link_to 'Destroy', sake_sake_comment_path(sake_comment.sake, sake_comment), method: :delete, "data-confirm" => "本当に削除しますか", class: "btn btn-danger"%></td>
+                          <% end %>
+                      </div>
+                  </div>
+                </li>
+              <% end %>
+            </ol>
+          </div>
+          <hr>
+          
+            <h3 class="section-title left">
+              <span>コメント</span>
+            </h3>
+ 
+         <%= form_for [@sake, @sake_comment] do |f| %>
+            <div class="row">
+              <div class="col-sm-12">
+                <%= f.text_field :comment, class: "form-control",placeholder: "コメントをここに" %>
+              </div>
+            </div>
+            <%= f.submit "送信する", class: "btn btn-lg btn-base-1 mt-20 pull-right" %>
+          <% end %>
+        </div>
+    </div>
+  </div>

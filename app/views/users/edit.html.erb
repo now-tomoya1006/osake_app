@@ -1,0 +1,43 @@
+<h1>My page</h1>
+<%= form_for (@user) do |f| %>
+
+
+<% if @user.errors.any? %>
+<%= @user.errors.count %>errors
+    <ul>
+    <% @user.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+  <% end %>
+
+
+    <div class="form-group">
+      <%= f.label :name %><br>
+      <%= f.text_field :name, autofocus: true ,class: "form-control name"%>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :image %><br />
+      <%= f.attachment_field :profile_image,class: "user_image" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :introduction %><br />
+      <%= f.text_area :introduction, autofocus: true ,class: "form-control introduction"%>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :type %><br>
+      <%= f.text_field :type, autofocus: true ,class: " type"%>
+    </div>
+
+    <div class="form-group">
+   <%= f.select :type, [["見習い","見習い"],["呑兵衛","呑兵衛"],["バーテンダー","バーテンダー"]] %>
+    </div>
+
+
+    <div class="actions">
+    <%= f.submit "Update User", class: "btn btn-primary" %>
+    </div>
+<% end %>

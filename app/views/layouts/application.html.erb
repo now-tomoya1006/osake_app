@@ -1,0 +1,101 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+<title>リキューる</title>
+<%= csrf_meta_tags %>
+<%= csp_meta_tag %>
+
+<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+<link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+</head>
+
+
+
+
+
+
+
+
+
+
+
+<body>
+   <div class="header">
+      <nav class="navbar navbar-main navbar-shadow">
+        <div class="container relative">
+          <div class="navbar-header">
+            <a class="navbar-logo" href="/">
+        <a class="b">リキューる</a>
+            </a>
+          </div>
+       <div id="slidemenu">
+            <ul class="nav navbar-nav navbar-right" data-hover="dropdown" >
+               <% if user_signed_in? %>
+           <li><%= link_to 'home', user_path(current_user), class: "home glyphicon glyphicon-home" %></li>
+                <li><%= link_to 'users', users_path, class: "users glyphicon glyphicon-user" %></li>
+                <li><%= link_to 'タイムライン', sakes_path, class: "sakes glyphicon glyphicon-" %></li>
+                <li><%= link_to "logout",destroy_user_session_path,method: :delete, class: "logout glyphicon glyphicon-log-out" %></li>
+                <% else %>
+                <li><%= link_to 'home', root_path, class: "home glyphicon glyphicon-home" %></li>
+                <li><%= link_to 'About', about_path, class: "about glyphicon glyphicon-link" %></li>
+                <li><%= link_to "sign up",new_user_registration_path, class: "sign_up glyphicon glyphicon-edit" %></li>
+                <li><%= link_to 'login', new_user_session_path, class: "sign_in glyphicon glyphicon-log-in" %></li>
+            <% end %>
+        </ul>
+        </div>
+
+      </nav>
+    </div>
+  </header>
+
+  <div class="header1">
+         <% flash.each do |message_type, message| %>
+          <%= content_tag(:div, message, class: "message_type") %>
+          <% end %>
+    <%= yield %>
+  </div>
+
+ 
+
+
+
+    <footer class="footer style-1">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="col">
+              <br>
+              <p class="no-margin" style="font-size: 11px;">
+              <br>
+              酒好きが集まる隠れ家なSNS
+          </p>
+              
+            </div>
+          </div>
+          <div class="col-md-9">
+            <div class="col">
+              <h4>Link</h4>
+              <ul>
+                <li>
+                  会社概要
+                </li>
+                <li>
+                  利用規約
+                </li>
+                <li>
+                  プライバシーポリシー
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    </body>
+</html>
