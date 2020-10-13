@@ -4,61 +4,62 @@
 
      <div class="col-md-6 col-md-offset-3">
         <div class="sake-item">
-       
-            <div class="sake-image">
-              <%= attachment_image_tag @sake, :image,:fill, 500, 500, fallback: "noimage.png" %>
-            </div>
-          </div>
-          <div class="sake-content">
-            <h2 class="sake-title"><%= @sake.title %></h2>
-            <ul class="float-wrapper">
-              <li>
-                <i class="user1"></i>
-                By<a><%= link_to @user.name ,user_path(@user.id) %></a>
-              
-                <i class="fa fa-calendar"></i><%= @sake.created_at.strftime('%Y/%m/%d') %>
-              
-   <% if current_user.already_favorited?(@sake) %>
-                
-                  <a href="#">
-                    <%= link_to sake_favorites_path(@sake), method: :delete do %>
-                   
-                       <i class="fas fa-heart" style="color: red;"></i>
-                  <% end %>
-                   <%= @sake.favorites.count %>
-                   </a>
-              <% else %>
-              
-                  <a href="#">
-                    <%= link_to sake_favorites_path(@sake), method: :post do %>
-                     
-                   <i class="fas fa-heart" style="color: red;"></i>
-                  <% end %>
-                   <%= @sake.favorites.count %>
-                  </a>
-               
-              <% end %>
-           
 
-              
-                <i class="comment"></i>
-                <i class="far fa-comment"></i>
-                <a href="#comments"><%= @sake.sake_comments.count %></a>
-              
-              
-                <% if @sake.user == current_user %>
-                  <%= link_to "Edit", edit_sake_path(@sake) %>
-                  <%= link_to "Destroy", sake_path(@sake), method: :delete %>
+          <div class="sake-image">
+                <%= attachment_image_tag @sake, :image,:fill, 500, 500, fallback: "noimage.png" %>
+              </div>
+            </div>
+            <div class="sake-content">
+              <h2 class="sake-title"><%= @sake.title %></h2>
+              <ul class="float-wrapper">
+                <li>
+                  <i class="user1"></i>
+                  By<a><%= link_to @user.name ,user_path(@user.id) %></a>
+                
+                  <i class="fa fa-calendar"></i><%= @sake.created_at.strftime('%Y/%m/%d') %>
+                
+    <% if current_user.already_favorited?(@sake) %>
+                  
+                    <a href="#">
+                      <%= link_to sake_favorites_path(@sake), method: :delete do %>
+                    
+                        <i class="fas fa-heart" style="color: red;"></i>
+                    <% end %>
+                    <%= @sake.favorites.count %>
+                    </a>
+                <% else %>
+                
+                    <a href="#">
+                      <%= link_to sake_favorites_path(@sake), method: :post do %>
+                      
+                    <i class="fas fa-heart" style="color: red;"></i>
+                    <% end %>
+                    <%= @sake.favorites.count %>
+                    </a>
+                
                 <% end %>
-              
-            </ul>
-          </div>
+            
+
+                
+                  <i class="comment"></i>
+                  <i class="far fa-comment"></i>
+                  <a href="#comments"><%= @sake.sake_comments.count %></a>
+                
+                
+                  <% if @sake.user == current_user %>
+                    <%= link_to "Edit", edit_sake_path(@sake) %>
+                    <%= link_to "Destroy", sake_path(@sake), method: :delete %>
+                  <% end %>
+                
+              </ul>
+            </div>
+       
           <div class="comment-list">
             <div class="float-wrapper">
               <h2 class="c"><%= @sake.sake_comments.count %>件コメント</h2>
             </div>
             <ol>
-              <% @sake.sake_comments.each do |sake_comment| %>
+              <% @sake_comments.each do |sake_comment| %>
                 <li class="comment-count">
                   <div class="comment-body bb">
                     <div class="comment-avatar">
@@ -76,8 +77,8 @@
                       <div class="comment-entry"><%= sake_comment.comment %></div>
                     </div>
                       <div>
-                          <% if sake_comment.user == current_user %>
-                          <td><%= link_to 'Destroy', sake_sake_comment_path(sake_comment.sake, sake_comment), method: :delete, "data-confirm" => "本当に削除しますか", class: "btn btn-danger"%></td>
+                          <% if current_user == sake_comment.user %>
+                          <td><%= link_to "Destroy",  sake_sake_comment_path(@sake, sake_comment), method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}, class: "btn-sm btn-danger destroy_sake_#{@sake.id}" %></td>
                           <% end %>
                       </div>
                   </div>

@@ -1,17 +1,18 @@
 class SakeCommentsController < ApplicationController
 def create
-    sake = Sake.find(params[:sake_id])
-    comment = SakeComment.new(sake_comment_params)
-    comment.user_id = current_user.id
-    comment.sake_id = sake.id
-    comment.save
-    redirect_to sake_path(sake)
+    @sake = Sake.find(params[:sake_id])
+    @sake_comment = current_user.sake_comments.new(sake_comment_params)
+    @sake_comment.sake_id = @sake.id
+    if @sake_comment.save
+      flash[:success] = "Comment was successfully created."
+    end
+    redirect_to request.referer
   end
 
   def destroy
-   
-     sake_comment = current_user.sake_comments.find_by(id: params[:id], sake_id: @sake.id)
-     sake_comment.destroy
+  @sake = Sake.find(params[:sake_id])
+    sake_comment = current_user.sake_comments.find_by(id: params[:id], sake_id: @sake.id)
+    sake_comment.destroy
     redirect_to request.referer
   end
   
